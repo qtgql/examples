@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "qtify"
+version = "0.1.0"
+description = "Qt client for spotify using qtgql"
+authors = ["Nir <88795475+nrbnlulu@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+strawberry-graphql = "^0.182.0"
+
+
+[tool.poetry.group.dev.dependencies]
+conan = "^2.0.6"
+qtgql = "^0.119.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
