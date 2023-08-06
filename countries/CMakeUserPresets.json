@@ -4,6 +4,6 @@
         "conan": {}
     },
     "include": [
-        "/home/nir/Desktop/qtgql/examples/countries/build/Release/generators/CMakePresets.json"
+        "/home/nir/Desktop/qtgql/examples/countries/build/Debug/generators/CMakePresets.json"
     ]
 }

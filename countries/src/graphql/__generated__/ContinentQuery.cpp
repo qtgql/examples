@@ -126,6 +126,7 @@ Continent__continent::Continent__continent(ContinentQuery * operation, const std
 {
     m_operation = operation;
     
+    
     auto init_vec_countries =  std::vector<Country__continentcountries*>();
     for (const auto & node: m_inst->get_countries()
 ){
@@ -141,6 +142,12 @@ void Continent__continent::_qtgql_connect_signals(){
 
 auto m_inst_ptr = m_inst.get();
 Q_ASSERT_X(m_inst_ptr, __FILE__, "Tried to instantiate a proxy object with an empty pointer!");
+connect(m_inst_ptr, &Countries::Continent::nameChanged, this,
+[&](){
+auto operation = m_operation;
+emit nameChanged();
+
+});
 connect(m_inst_ptr, &Countries::Continent::countriesChanged, this,
 [&](){
 auto operation = m_operation;
@@ -177,6 +184,12 @@ if (data.isEmpty()){
 }
 auto inst = Continent::shared();
 
+if (!data.value("name").isNull()){
+inst->set_name(data.value("name").toString() );
+    
+    
+};
+
 if (!data.value("countries").isNull()){
 
         std::vector<std::shared_ptr<Country>> countries_init_vec;
@@ -198,6 +211,15 @@ return inst;
 // Updater
 void updaters::update_Continent__continent(const std::shared_ptr<Continent> & inst, const QJsonObject &data, const ContinentQuery * operation)
 {
+if (!data.value("name").isNull()){
+auto new_name = data.value("name").toString();
+if (inst->m_name != new_name){
+inst->set_name(new_name );
+}
+
+
+}
+
 if (!data.value("countries").isNull()){
 
     
@@ -224,6 +246,9 @@ if (!data.value("countries").isNull()){
 
 
 // Continent__continent Getters
+[[nodiscard]] const QString  Continent__continent::get_name() const {
+
+return m_inst->get_name();};
 [[nodiscard]] const qtgql::bases::ListModelABC<Country__continentcountries *> *  Continent__continent::get_countries() const {
 
 return m_countries;
@@ -236,6 +261,11 @@ void Continent__continent::qtgql_replace_concrete(const std::shared_ptr<Continen
     return;
     }
     m_inst->disconnect(this);
+    if(m_inst->m_name != new_inst->m_name){
+    auto operation = m_operation;
+emit nameChanged();
+
+    };
     if(m_inst->m_countries != new_inst->m_countries){
     auto operation = m_operation;
 auto new_data = m_inst->get_countries();

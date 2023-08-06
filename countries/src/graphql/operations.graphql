@@ -1,5 +1,6 @@
 query ContinentQuery($code: ID!){
   continent(code:$code){
+    name
     countries{
       capital
       emoji

@@ -67,9 +67,11 @@ QML_ELEMENT
 QML_UNCREATABLE("QtGql does not supports instantiation via qml")
 Q_PROPERTY(QString  __typeName READ __typename CONSTANT)
 
+Q_PROPERTY(const QString name READ get_name NOTIFY nameChanged);
 Q_PROPERTY(const qtgql::bases::ListModelABC<Country__continentcountries *> * countries READ get_countries NOTIFY countriesChanged);
 
 signals:
+void nameChanged();
 void countriesChanged();
 
 protected:
@@ -85,6 +87,7 @@ void qtgql_replace_concrete(const std::shared_ptr<Continent> & new_inst);
 protected:
     void _qtgql_connect_signals();
 public:
+[[nodiscard]] const QString  get_name() const;
 [[nodiscard]] const qtgql::bases::ListModelABC<Country__continentcountries *> *  get_countries() const;
 public:
 [[nodiscard]] const QString & __typename() const final{
@@ -158,7 +161,7 @@ signals:
 public:
 ContinentQueryVariables vars_inst;
 
-ContinentQuery(): qtgql::bases::OperationHandlerABC(qtgql::bases::GraphQLMessage("query ContinentQuery($code: ID!) {""  continent(code: $code) {""    countries {""      capital""      emoji""    }""  }""}")){};
+ContinentQuery(): qtgql::bases::OperationHandlerABC(qtgql::bases::GraphQLMessage("query ContinentQuery($code: ID!) {""  continent(code: $code) {""    name""    countries {""      capital""      emoji""    }""  }""}")){};
 
 
 QTGQL_STATIC_MAKE_SHARED(ContinentQuery)

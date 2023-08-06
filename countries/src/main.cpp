@@ -7,6 +7,7 @@
 #include <memory>
 #include <qtgql/bases/bases.hpp>
 #include <qtgql/gqloverhttp/gqloverhttp.hpp>
+#include "graphql/__generated__/ContinentQuery.hpp"
 
 
 namespace fs = std::filesystem;
@@ -20,15 +21,11 @@ int main(int argc, char *argv[]){
         std::unique_ptr<qtgql::bases::NetworkLayerABC>(new qtgql::gqloverhttp::GraphQLOverHttp({"https://countries.trevorblades.com/"})))
     );
     qtgql::bases::Environment::set_gql_env(env);
-
-
-
+    auto cont_query = Countries::continentquery::ContinentQuery::shared();
+    cont_query->set_variables(Countries::continentquery::ContinentQueryVariables{.code="EU"});
+    cont_query->fetch();
+    engine.rootContext()->setContextProperty("query", cont_query.get());
     QUrl url((fs::path(__FILE__).parent_path() / "qml" / "main.qml").c_str());
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                     &app, [url](QObject *obj, const QUrl &objUrl) {
-                if (!obj && url == objUrl)
-                    QCoreApplication::exit(-1);
-            }, Qt::QueuedConnection);
     engine.load(url);
     return QGuiApplication::exec();
 }
