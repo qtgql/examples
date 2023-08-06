@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Layouts
+
 Window{id:root
     width: 500;
     height: 400;
@@ -9,19 +9,25 @@ Window{id:root
     Rectangle{
         anchors.fill: parent;
         color: "grey";
-        ColumnLayout{
-        Text{
-            text: `Continent ${root.continent?.name} Countries )`
-        }
+
         ListView{id: countries_view
-            model: root.continent?.countries
-            delegate:
-                Text{id: country_delegate
-                    required property var model;
-                    property var country: model.data;
-                    text: ` ${country.emoji} ${country.capital}`
+        anchors.fill: parent;
+            model: root.continent?.countries;
+            header: Text{
+                text: `Countries in Continent ${root.continent?.name} (${countries_view.count})`
+            }
+            delegate: Item{                    id: country_delegate
+                required property var model;
+                property var view: ListView.view;
+                width: view.width;
+                height: 50;
+                Text{
+                    anchors.centerIn: parent;
+                    property var country: country_delegate.model.data;
+                    text: `${country_delegate.model.index}: ${country.emoji} ${country.capital}`
                 }
+            }
         }
-        }
+        
     }
 }
