@@ -45,11 +45,11 @@ input LanguageFilterInput {
 
 type Query {
   continent(code: ID!): Continent
-  continents(filter: ContinentFilterInput = {}): [Continent!]!
-  countries(filter: CountryFilterInput = {}): [Country!]!
-  country(code: ID!): Country
-  language(code: ID!): Language
-  languages(filter: LanguageFilterInput = {}): [Language!]!
+  continents(filter: ContinentFilterInput): [Continent!]!
+  # countries(filter: CountryFilterInput): [Country!]!
+  # country(code: ID!): Country
+  # language(code: ID!): Language
+  # languages(filter: LanguageFilterInput): [Language!]!
 }
 
 type State {

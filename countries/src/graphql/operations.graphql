@@ -1,7 +1,8 @@
-query AllCountries{
-  countries{
-    capital
-    emoji
-    code
+query ContinentQuery($code: ID!){
+  continent(code:$code){
+    countries{
+      capital
+      emoji
+    }
   }
 }

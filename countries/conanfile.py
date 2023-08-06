@@ -8,7 +8,6 @@ import subprocess
 from functools import cached_property
 from pathlib import Path
 from typing import ClassVar
-from venv import logger
 
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain, cmake_layout
@@ -21,18 +20,23 @@ class PATHS:
 ConanBool = [True, False]
 
 
-__version__: str = "0.1.0"
 
-
-class QtGqlCountriesRecipe(ConanFile):
+class CountriesRecipe(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     name = "countries"
     license = "MIT"
-    version = __version__
+    author = "Nir Benlulu nrbnlulu@gmail.com"
+    url = "https://github.com/qtgql/examples"
+    description = "GraphQL codegen client library for Qt"
+    topics = ("GraphQL", "Qt", "codegen")
+    version = "0.1.0"
     build_policy = "missing"
+    options = {"qt_version": ["6.5.0"]}  # noqa
+    default_options = {  # noqa
+        "qt_version": "6.5.0",
+    }
 
-
-    exports_sources = "CMakeLists.txt", "src/*"
+    exports_sources = "CMakeLists.txt", "include/*", "pyproject.toml"
 
     def requirements(self) -> None:
         ...
@@ -52,7 +56,10 @@ class QtGqlCountriesRecipe(ConanFile):
 
     @cached_property
     def qt_version(self) -> str:
-        return "6.5.0"
+        qt_version = self.options.qt_version.value
+        if self.is_windows() and "6.5" in qt_version:
+            return "6.5.0"
+        return qt_version
 
     @property
     def qt_arch(self) -> str:
@@ -80,8 +87,6 @@ class QtGqlCountriesRecipe(ConanFile):
             with contextlib.suppress(IndexError):
                 p = (relative_to / res[0]).resolve(True)
                 return p.parent
-
-
 
     def generate(self) -> None:
         if not self.qt6_install_dir:
