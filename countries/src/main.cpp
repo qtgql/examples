@@ -1,12 +1,10 @@
-#include "qtgql/bases/detail/environment.hpp"
-#include "qtgql/bases/detail/networklayer.hpp"
-#include "qtgql/gqloverhttp/detail/gqloverhttp.hpp"
 #include <QtGui>
 #include <QtQuick>
 #include <filesystem>
 #include <memory>
 #include <qtgql/bases/bases.hpp>
 #include <qtgql/gqloverhttp/gqloverhttp.hpp>
+
 #include "graphql/__generated__/ContinentQuery.hpp"
 
 
