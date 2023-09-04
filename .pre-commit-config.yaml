@@ -32,7 +32,7 @@ repos:
       - id: fix-future-annotations
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.275
+    rev: v0.0.287
     hooks:
       - id: ruff
         args: ["--fix"]
