@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from core.books.repositories import BookRepository
 from db.models import Book
 

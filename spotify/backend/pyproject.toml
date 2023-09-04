@@ -19,6 +19,7 @@ pytest-asyncio = "^0.21.1"
 alembic = "^1.12.0"
 black = "^23.7.0"
 isort = "^5.12.0"
+pre-commit = "^3.4.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -49,7 +50,7 @@ exclude = '''
 [tool.ruff]
 line-length = 100
 select = ["ALL"]
-target-version = "py38"
+target-version = "py310"
 ignore = [
     # https://beta.ruff.rs/docs/rules/#flake8-fixme-fix
     "FIX002",
@@ -58,14 +59,21 @@ ignore = [
     "S607",
     "TD002",
     "TD003",
+    "E501", # Line Length
+    "ANN101",
+    "ANN102",
+    "D10", # Disable mandatory docstrings
+    "D203", # one-blank-line-before-class
+    "D212", # multi-line-summary-first-line
+    "PD", # pandas-vet
+    "TCH001",
+    "TCH002",
+    "TCH003",
+    "EXE",
+    "A003" # shadow_builtins
 ]
+src = ["backend", "tests"]
 
-fix = true
-src = ["qtgqlcodegen", "tests"]
-
-[tool.ruff.per-file-ignores]
-"**/migrations/*" = ["RUF012"]
-"tests/*" = ["S101", "S311", "ARG001", "ANN001", "ANN201"]
 
 [tool.ruff.flake8-annotations]
 suppress-none-returning = true

@@ -12,11 +12,10 @@ add_subdirectory(src/graphql/__generated__)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Quick)
 
-add_executable(${PROJECT_NAME} 
+add_executable(${PROJECT_NAME}
         "src/main.cpp"
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE qtgql::qtgql
         Qt6::Core Qt6::Quick Countries
         )
-

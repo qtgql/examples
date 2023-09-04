@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Sequence
 from typing import Protocol
 
@@ -5,8 +7,7 @@ from backend.db import Base
 
 
 class DBContext(Protocol):
-    """
-    Constrained interface for sqlalchemy AsyncSession.
+    """Constrained interface for sqlalchemy AsyncSession.
 
     It's meant to be used in services or commands to persist data
     without having to reach out for AsyncSession directly.
