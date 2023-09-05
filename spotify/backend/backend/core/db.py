@@ -1,7 +1,10 @@
 from datetime import datetime
 
 from sqlalchemy import DateTime, MetaData
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, registry
+
+from .settings import DatabaseSettings, get_settings
 
 meta = MetaData(
     naming_convention={
@@ -14,7 +17,7 @@ meta = MetaData(
 )
 
 
-class Base(DeclarativeBase):
+class BaseTable(DeclarativeBase):
     metadata = meta
 
     registry = registry(
@@ -22,3 +25,12 @@ class Base(DeclarativeBase):
             datetime: DateTime(timezone=True),
         },
     )
+
+
+_settings = get_settings(DatabaseSettings)
+
+engine = create_async_engine(
+    _settings.DATABASE_URL,
+    echo=_settings.ECHO,
+)
+async_session_factory = async_sessionmaker(bind=engine)

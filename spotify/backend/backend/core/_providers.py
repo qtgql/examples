@@ -8,8 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
 from backend.core.types import Providers
 
-from ._context import DBContext
-from ._engine import async_session_factory, engine
+from .db import async_session_factory, engine
 
 
 @contextlib.asynccontextmanager
@@ -24,12 +23,7 @@ async def create_session(_: AsyncEngine) -> AsyncIterator[AsyncSession]:
         yield session
 
 
-async def db_context(session: AsyncSession) -> DBContext:
-    return session
-
-
 providers: Providers = [
     aioinject.Singleton(create_engine),
     aioinject.Callable(create_session),
-    aioinject.Callable(db_context),
 ]
