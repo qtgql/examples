@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.types import UnicodeText
 
-from backend.core.db import BaseTable
+from backend.db import BaseTable
 
 
 class Book(BaseTable):

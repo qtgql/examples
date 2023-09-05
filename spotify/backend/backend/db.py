@@ -1,10 +1,17 @@
+import contextlib
+from collections.abc import AsyncIterator
 from datetime import datetime
 
 from sqlalchemy import DateTime, MetaData
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
 from sqlalchemy.orm import DeclarativeBase, registry
 
-from .settings import DatabaseSettings, get_settings
+from backend.core import DatabaseSettings, get_settings
 
 meta = MetaData(
     naming_convention={
@@ -34,3 +41,18 @@ engine = create_async_engine(
     echo=_settings.ECHO,
 )
 async_session_factory = async_sessionmaker(bind=engine)
+
+
+@contextlib.asynccontextmanager
+async def create_engine() -> AsyncIterator[AsyncEngine]:
+    yield engine
+    await engine.dispose()
+
+
+@contextlib.asynccontextmanager
+async def create_session(_: AsyncEngine) -> AsyncIterator[AsyncSession]:
+    async with async_session_factory.begin() as session:
+        yield session
+
+
+__all__ = ["async_session_factory", "BaseTable", "create_engine", "create_session"]

@@ -4,12 +4,13 @@ from typing import Any
 import aioinject
 from aioinject import Provider
 
-from backend import core
 from backend.apps import books
+from backend.db import create_engine, create_session
 
 providers: Iterable[Provider[Any]] = [
-    *core.providers,
     *books.config.providers,
+    aioinject.Singleton(create_engine),
+    aioinject.Callable(create_session),
 ]
 
 container = aioinject.Container()
