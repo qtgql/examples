@@ -6,36 +6,28 @@ App::App(QObject *parent) : QObject{parent} {
       new qtgql::gqloverhttp::GraphQLOverHttp(
           {"http://127.0.0.1:8000/graphql"}));
   auto env = std::shared_ptr<qtgql::bases::Environment>(
-      new qtgql::bases::Environment{"GisPoc", std::move(client)});
+      new qtgql::bases::Environment{"Books", std::move(client)});
   qtgql::bases::Environment::set_gql_env(env);
-  m_close_trackimo_event_mut =
-      close_trackimo_event::CloseTrackimoEvent::shared();
-  m_locations_query = locations_query::LocationsQuery::shared();
-  m_locations_query->fetch();
-  m_events_query = events_query::EventsQuery::shared();
-  m_events_query->fetch();
+  m_create_book_mut = createbook::CreateBook::shared();
+  m_all_books_query = allbooks::AllBooks::shared();
+  m_all_books_query->fetch();
   auto refetch_timer = new QTimer();
   refetch_timer->setInterval(5000);
-  connect(refetch_timer, &QTimer::timeout, [this] {
-    m_locations_query->refetch();
-    m_events_query->refetch();
-  });
+  connect(refetch_timer, &QTimer::timeout,
+          [this] { m_all_books_query->refetch(); });
   refetch_timer->start();
 }
 
-locations_query::LocationsQuery *App::get_locationsquery() {
-  return m_locations_query.get();
+const createbook::CreateBook *App::create_book(const QString &title,
+                                               const QString &content,
+                                               const QString &author) {
+  m_create_book_mut->set_variables(
+      {Books::CreateBookInput::create(title, author, content)});
+  m_create_book_mut->completed() ? m_create_book_mut->refetch()
+                                 : m_create_book_mut->fetch();
+  return m_create_book_mut.get();
 }
 
-events_query::EventsQuery *App::get_eventsquery() {
-  return m_events_query.get();
-}
-
-const close_trackimo_event::CloseTrackimoEvent *
-App::close_trackimo_event(const QString &event_id) {
-  m_close_trackimo_event_mut->set_variables({{event_id}});
-  m_close_trackimo_event_mut->completed()
-      ? m_close_trackimo_event_mut->refetch()
-      : m_close_trackimo_event_mut->fetch();
-  return m_close_trackimo_event_mut.get();
+allbooks::AllBooks *App::get_allbooks_query() {
+  return m_all_books_query.get();
 }
