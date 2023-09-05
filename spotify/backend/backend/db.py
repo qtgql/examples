@@ -24,7 +24,7 @@ meta = MetaData(
 )
 
 
-class BaseTable(DeclarativeBase):
+class Base(DeclarativeBase):
     metadata = meta
 
     registry = registry(
@@ -55,4 +55,4 @@ async def create_session(_: AsyncEngine) -> AsyncIterator[AsyncSession]:
         yield session
 
 
-__all__ = ["async_session_factory", "BaseTable", "create_engine", "create_session"]
+__all__ = ["async_session_factory", "Base", "create_engine", "create_session"]

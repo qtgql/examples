@@ -6,9 +6,9 @@ from sqlalchemy import engine_from_config, pool
 from sqlalchemy.engine import Connectable, Connection
 from sqlalchemy.ext.asyncio import AsyncEngine
 
-import backend.db.models  # noqa: F401
+import backend.apps.books  # noqa: F401
+from backend.core import DatabaseSettings, get_settings
 from backend.db import Base
-from backend.settings import DatabaseSettings, get_settings
 
 config = context.config
 

@@ -1,10 +1,10 @@
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.types import UnicodeText
 
-from backend.db import BaseTable
+from backend.db import Base
 
 
-class Book(BaseTable):
+class Book(Base):
     __tablename__ = "book"
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str]
