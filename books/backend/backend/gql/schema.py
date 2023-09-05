@@ -25,3 +25,9 @@ schema = Schema(
         ContainerExtension(container=container),
     ],
 )
+
+if __name__ == "__main__":
+    from pathlib import Path
+
+    schema_file = Path(__file__).parent / "schema.graphql"
+    schema_file.write_text(str(schema))

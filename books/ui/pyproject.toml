@@ -1,0 +1,13 @@
+[tool.poetry]
+name = "books-ui"
+version = "0.1.0"
+description = ""
+authors = ["Nir <88795475+nrbnlulu@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+qtgql = { path = "3rdParty/qtgql", develop = false }
+typing-extensions = "^4.6.3"
+pre-commit = "^3.3.3"
+conan = "^2.0.10"

@@ -26,6 +26,10 @@ app.add_middleware(
 )
 
 
+def enterypoint() -> fastapi.FastAPI:
+    return app
+
+
 if __name__ == "__main__":
     import uvicorn
 

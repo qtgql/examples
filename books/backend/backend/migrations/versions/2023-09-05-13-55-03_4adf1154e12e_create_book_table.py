@@ -1,20 +1,23 @@
-"""create book table
+"""
+create book table.
 
 Revision ID: 4adf1154e12e
-Revises: 
+Revises:
 Create Date: 2023-09-05 13:55:03.091038
 
 """
-from typing import Sequence, Union
+from __future__ import annotations
+
+from collections.abc import Sequence
 
 import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = "4adf1154e12e"
-down_revision: Union[str, None] = None
-branch_labels: Union[str, Sequence[str], None] = None
-depends_on: Union[str, Sequence[str], None] = None
+down_revision: str | None = None
+branch_labels: str | Sequence[str] | None = None
+depends_on: str | Sequence[str] | None = None
 
 
 def upgrade() -> None:

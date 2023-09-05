@@ -74,7 +74,8 @@ ignore = [
     "TCH003",
     "EXE",
     "A003", # shadow_builtins
-    "A002"
+    "A002",
+    "N999" # invalid module name
 ]
 src = ["backend", "tests"]
 
