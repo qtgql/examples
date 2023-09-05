@@ -45,6 +45,6 @@ class BookMutation:
             title=input.title,
         )
         return BookCreatePayload(
-            result=BookGQL.from_orm(result.unwrap()),
+            result=BookGQL.from_orm(result),
             error=None,
         )
