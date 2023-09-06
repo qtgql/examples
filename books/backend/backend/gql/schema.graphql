@@ -27,6 +27,7 @@ interface Error {
 }
 
 type Mutation {
+  deleteBook(bookId: ID!): Boolean!
   createBook(input: CreateBookInput!): BookCreatePayload!
 }
 

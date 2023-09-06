@@ -17,3 +17,7 @@ mutation CreateBook($input: CreateBookInput!){
     }
   }
 }
+
+mutation DeleteBook($bookID: ID!){
+  deleteBook(bookId:$bookID)
+}

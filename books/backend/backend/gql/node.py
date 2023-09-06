@@ -8,5 +8,10 @@ class Node:
 
     @strawberry.field()
     def id(self) -> strawberry.ID:
-        td = get_object_definition(self, strict=True)
+        td = get_object_definition(self.__class__, strict=True)
         return strawberry.ID(f"{td.name}{self._id}")
+
+    @classmethod
+    def get_raw_id(cls, id: str) -> int:
+        td = get_object_definition(cls, strict=True)
+        return int(id.strip(td.name))

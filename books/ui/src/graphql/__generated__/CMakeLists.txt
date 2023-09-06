@@ -68,6 +68,23 @@ target_link_libraries(${PROJECT_NAME}CreateBook PUBLIC
         ${PROJECT_NAME}schema
         qtgql::qtgql
         )
+qt_add_qml_module(${PROJECT_NAME}DeleteBook
+        URI GraphQL.${PROJECT_NAME}.DeleteBook
+        # Using PLUGIN_TARGET in static library compilation will cause link failure
+        OUTPUT_DIRECTORY ${QTGQL_QML_PLUGIN_DIRECTORY}/DeleteBook
+        # TYPEINFO "plugins.qmltypes"
+        SOURCES
+        /home/nir/Desktop/qtgql/qtgql_examples/books/ui/src/graphql/__generated__/DeleteBook.hpp
+        /home/nir/Desktop/qtgql/qtgql_examples/books/ui/src/graphql/__generated__/DeleteBook.cpp
+        )
+
+target_link_libraries(${PROJECT_NAME}DeleteBook PUBLIC
+        Qt::CorePrivate
+        Qt::QuickPrivate
+        Qt::QmlPrivate
+        ${PROJECT_NAME}schema
+        qtgql::qtgql
+        )
 
 
 qt_add_library(${PROJECT_NAME} "")
@@ -80,5 +97,6 @@ target_link_libraries(
     ${PROJECT_NAME}schema
     ${PROJECT_NAME}AllBooks
     ${PROJECT_NAME}CreateBook
+    ${PROJECT_NAME}DeleteBook
     
 )

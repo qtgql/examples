@@ -264,14 +264,26 @@ return ret;
 class Mutation :  public qtgql::bases::ObjectTypeABC {
 Q_OBJECT
 public:
+std::unordered_map<QJsonObject, std::shared_ptr<bool>, qtgql::bases::tools::QJsonValueHasher>
+ m_deleteBook = {};
 std::unordered_map<QJsonObject, std::shared_ptr<BookCreatePayload>, qtgql::bases::tools::QJsonValueHasher>
  m_createBook = {};
 
 signals:
+void deleteBookChanged();
 void createBookChanged();
 
 
 public:
+
+[[nodiscard]] const std::shared_ptr<bool> &get_deleteBook(const QJsonObject & args )const{
+return m_deleteBook.at(args);
+}
+void set_deleteBook(const std::shared_ptr<bool> & v, const QJsonObject & args )
+{
+m_deleteBook[args] = v;
+emit deleteBookChanged();
+};
 
 [[nodiscard]] const std::shared_ptr<BookCreatePayload> &get_createBook(const QJsonObject & args )const{
 return m_createBook.at(args);

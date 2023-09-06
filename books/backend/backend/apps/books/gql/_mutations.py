@@ -34,6 +34,16 @@ BookCreateErrors = Annotated[
 class BookMutation:
     @strawberry.mutation()
     @inject
+    async def delete_book(
+        self,
+        book_id: strawberry.ID,
+        book_service: Annotated[BookService, Inject],
+    ) -> bool:
+        await book_service.delete_book(BookGQL.get_raw_id(book_id))
+        return True
+
+    @strawberry.mutation()
+    @inject
     async def create_book(
         self,
         input: CreateBookInput,
