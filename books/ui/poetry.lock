@@ -508,7 +508,7 @@ files = [
 
 [[package]]
 name = "qtgql"
-version = "0.135.3"
+version = "0.135.5"
 description = "Qt framework for building graphql driven QML applications"
 optional = false
 python-versions = ">=3.8,<3.12"

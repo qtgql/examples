@@ -10,19 +10,25 @@ Pane {
         text: `Books count: ${books_lv.count}`
         font.pixelSize: 50
     }
-    ListView {
-        id: books_lv
+    ScrollView {
         height: parent.height
         anchors.centerIn: parent
-        model: App.allBooksQuery?.data.allBooks
         width: 400
-        delegate: Pane {
-            required property var model
-            width: ListView.view.width
-            height: 200
-            BookDelegate {
-                anchors.fill: parent
-                book: model.data
+
+        ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+        ListView {
+            id: books_lv
+            anchors.fill: parent
+
+            model: App.allBooksQuery?.data.allBooks
+            delegate: Pane {
+                required property var model
+                width: ListView.view.width
+                height: 200
+                BookDelegate {
+                    anchors.fill: parent
+                    book: model.data
+                }
             }
         }
     }

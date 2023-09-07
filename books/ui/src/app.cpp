@@ -1,4 +1,5 @@
 #include "app.hpp"
+#include <QJSEngine>
 #include <qtgql/gqloverhttp/gqloverhttp.hpp>
 
 App::App(QObject *parent) : QObject{parent} {
@@ -13,6 +14,8 @@ App::App(QObject *parent) : QObject{parent} {
   qtgql::bases::Environment::set_gql_env(env);
   m_create_book_mut = createbook::CreateBook::shared();
   m_all_books_query = allbooks::AllBooks::shared();
+  QJSEngine::setObjectOwnership(m_delete_book_mut.get(),
+                                QJSEngine::CppOwnership);
   m_all_books_query->fetch();
   auto refetch_timer = new QTimer(this);
   refetch_timer->setInterval(500);
