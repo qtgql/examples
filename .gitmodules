@@ -1,3 +1,6 @@
 [submodule "countries/3rdparty/qtgql"]
 	path = countries/3rdparty/qtgql
 	url = https://github.com/qtgql/qtgql.git
+[submodule "books/ui/3rdParty/qtgql"]
+	path = books/ui/3rdParty/qtgql
+	url = https://github.com/qtgql/qtgql.git

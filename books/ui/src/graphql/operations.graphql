@@ -1,0 +1,23 @@
+query AllBooks{
+  allBooks{
+    id
+    title
+    author
+    content
+  }
+}
+
+mutation CreateBook($input: CreateBookInput!){
+  createBook(input: $input){
+    result{
+      id
+      title
+      author
+      content
+    }
+  }
+}
+
+mutation DeleteBook($bookID: ID!){
+  deleteBook(bookId:$bookID)
+}

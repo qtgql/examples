@@ -1,0 +1,41 @@
+type Book implements Node {
+  id: ID!
+  title: String!
+  author: String!
+  content: String!
+}
+
+union BookCreateErrors = EntityAlreadyExistsError
+
+type BookCreatePayload {
+  result: Book
+  error: BookCreateErrors
+}
+
+input CreateBookInput {
+  title: String!
+  author: String!
+  content: String!
+}
+
+type EntityAlreadyExistsError implements Error {
+  message: String!
+}
+
+interface Error {
+  message: String!
+}
+
+type Mutation {
+  deleteBook(bookId: ID!): Boolean!
+  createBook(input: CreateBookInput!): BookCreatePayload!
+}
+
+interface Node {
+  id: ID!
+}
+
+type Query {
+  bookById(bookId: ID!): Book
+  allBooks: [Book!]!
+}

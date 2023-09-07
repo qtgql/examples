@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import contextlib
 import glob
-import logging
 import os
 import subprocess
 from functools import cached_property
@@ -18,7 +17,6 @@ class PATHS:
 
 
 ConanBool = [True, False]
-
 
 
 class CountriesRecipe(ConanFile):
@@ -67,6 +65,7 @@ class CountriesRecipe(ConanFile):
             return "gcc_64"
         elif self.is_windows():
             return "win64_mingw"
+        return None
 
     @cached_property
     def aqt_install_dir(self) -> Path:
@@ -87,6 +86,7 @@ class CountriesRecipe(ConanFile):
             with contextlib.suppress(IndexError):
                 p = (relative_to / res[0]).resolve(True)
                 return p.parent
+        return None
 
     def generate(self) -> None:
         if not self.qt6_install_dir:
@@ -123,4 +123,3 @@ class CountriesRecipe(ConanFile):
     def package(self):
         cmake = CMake(self)
         cmake.install()
-

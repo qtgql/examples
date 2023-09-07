@@ -1,2 +1,2 @@
 # examples
-Working QML applications that uses **qtgql**.  
+Working QML applications that uses **qtgql**.
